@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #020617;
+  --color-bg-secondary: #0f172a;
+  --color-glass: rgba(255, 255, 255, 0.08);
+  --color-accent-blue: #38bdf8;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-purple: #8b5cf6;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #cbd5e1;
+
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --scrollbar-width: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-bg-primary);
+  scroll-behavior: auto;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  overflow-x: clip;
+}
+
+html {
+  overflow-x: clip;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a,
+  button {
+    cursor: none;
+  }
+
+  input,
+  textarea {
+    cursor: auto;
+  }
+}
+
+::selection {
+  background: var(--color-accent-blue);
+  color: var(--color-bg-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-blue);
+  border-radius: 999px;
+}
+
+.glass-panel {
+  background: var(--color-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient-evolution {
+  background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 45%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Fine film grain over the whole page. Flat near-black backgrounds read as
+ * "cheap" on high-density screens; a barely-perceptible noise texture is a
+ * hallmark of award-winning dark UIs (Linear, Vercel, Cuberto). Rendered
+ * once as a fixed, non-interactive overlay via an inline SVG data-URI, so
+ * it costs nothing extra to fetch.
+ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Soft aura behind the gradient headline for depth on dark backgrounds. */
+.headline-glow {
+  filter: drop-shadow(0 0 28px rgba(56, 189, 248, 0.18));
+}
+
+/*
+ * CSS aurora — large blurred gradient blobs that slowly drift. Animated only
+ * with transform/opacity so they run on the compositor (no main-thread cost,
+ * no WebGL). This is the GPU-free backdrop for the Hero.
+ */
+.hero-aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.hero-aurora--a {
+  top: -10%;
+  left: 5%;
+  width: 45vmax;
+  height: 45vmax;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.55), transparent 65%);
+  animation: aurora-drift-a 18s ease-in-out infinite;
+}
+
+.hero-aurora--b {
+  top: 20%;
+  right: 0%;
+  width: 40vmax;
+  height: 40vmax;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.5), transparent 65%);
+  animation: aurora-drift-b 22s ease-in-out infinite;
+}
+
+.hero-aurora--c {
+  bottom: -15%;
+  left: 30%;
+  width: 38vmax;
+  height: 38vmax;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.45), transparent 65%);
+  animation: aurora-drift-c 26s ease-in-out infinite;
+}
+
+@keyframes aurora-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6%, 8%, 0) scale(1.12); }
+}
+
+@keyframes aurora-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-8%, 5%, 0) scale(0.95); }
+}
+
+@keyframes aurora-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, -6%, 0) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-aurora {
+    animation: none !important;
+  }
+}
+
+/* Fine light sheen on the top edge of glass panels — catches the eye subtly. */
+.glass-panel,
+.glass-sheen {
+  position: relative;
+}
+
+.glass-sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+/*
+ * Defer rendering/layout of below-the-fold sections until they approach the
+ * viewport. `contain-intrinsic-size` reserves an estimated height so the
+ * scrollbar and anchor offsets stay stable before a section is painted.
+ * Applied via the `.cv-auto` class (NOT the Hero, which must paint on load).
+ */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/*
+ * Company-chip floating is handled by GSAP (see companies-section.tsx),
+ * which respects prefers-reduced-motion at the source.
+ */
+
+/* Blinking code caret in the hero headline — a small nod to the editor the
+   whole product is about. Pauses entirely under reduced-motion. */
+.hero-caret {
+  animation: caret-blink 1.15s steps(1, end) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-caret {
+    animation: none;
+    opacity: 1;
+  }
+}
