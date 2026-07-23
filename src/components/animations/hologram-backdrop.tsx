@@ -68,7 +68,7 @@ export function HologramBackdrop() {
     >
       <video
         ref={videoRef}
-        className="hologram-video absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-0 motion-reduce:opacity-20"
+        className="hologram-video absolute inset-0 h-full w-full object-cover opacity-0 motion-reduce:opacity-20"
         muted
         loop
         playsInline

@@ -27,15 +27,23 @@ export function AboutSection() {
     ).matches;
 
     // Eyebrow line draws in, synced to the section entering the viewport.
-    gsap.to(".about-eyebrow-line", {
-      scaleX: 1,
-      duration: 1.1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: scopeRef.current,
-        start: "top 78%",
-      },
-    });
+    // fromTo declares both ends here so GSAP owns the transform outright —
+    // a Tailwind scale-x-0 on the same element would compete with it.
+    gsap.fromTo(
+      ".about-eyebrow-line",
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: 1.1,
+        ease: "power3.out",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: scopeRef.current,
+          start: "top 78%",
+          once: true,
+        },
+      }
+    );
 
     // Intro paragraph rises in just after the headline. fromTo with
     // immediateRender:false keeps it visible if the trigger never fires.
@@ -108,7 +116,7 @@ export function AboutSection() {
           <div className="flex items-center gap-4">
             <span
               aria-hidden
-              className="about-eyebrow-line h-px w-12 origin-left scale-x-0 bg-gradient-evolution"
+              className="about-eyebrow-line h-px w-12 origin-left bg-gradient-evolution"
             />
             <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent-cyan">
               Quem somos
