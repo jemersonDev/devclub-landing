@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://devclub.com.br"),
+  metadataBase: new URL("https://devclub-jemerson.netlify.app"),
   title: {
     default: "DevClub | A evolução do desenvolvedor começa aqui",
     template: "%s | DevClub",
@@ -78,7 +78,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: "DevClub",
-    url: "https://devclub.com.br",
+    url: "https://devclub-jemerson.netlify.app",
     description:
       "Formação completa em desenvolvimento web, do primeiro console.log ao primeiro emprego full stack.",
     sameAs: [
