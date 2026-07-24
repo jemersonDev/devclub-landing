@@ -7,6 +7,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ConsoleSignature } from "@/components/ui/console-signature";
 import "@/styles/globals.css";
 
+
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
